@@ -2,18 +2,30 @@
 ![Badge en Desarrollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-gren)
 
 >[!NOTE]
-> Se migra el proyecto de npm a pnpm para la instación de dependencias de nodejs por lo que debe tener en cuenta instalar las dependecias necesarias utilizando pnpm con el siguiente comando SI su entorno de desarrollo será bajo Windows.
+>Se migra el proyecto de npm a pnpm para la instación de dependencias de nodejs por lo que debe tener en cuenta instalar las dependecias necesarias utilizando pnpm con el siguiente comando SI su entorno de desarrollo será bajo Windows.
 >Habre una terminal PowerShell como administrador y ejecute el siguiente comando:
 >```
 > Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
 >```
-> En caso de que Windows rechace realizar cualquier instalación por detectarla como una ejecución maliciosa, indique a Windows Defender y agregue pnpm en las listas de excepciones con el siguinte comando:
+>En caso de que Windows rechace realizar cualquier instalación por detectarla como una ejecución maliciosa, indique a Windows Defender y agregue pnpm en las listas de excepciones con el siguinte comando:
 > ```
 > Add-MpPreference -ExclusionPath $(pnpm store path)
 > ```
-> Cualquier inconveniente comuniquelo con el administador.
+>Cualquier inconveniente comuniquelo con el administador.
 >Para más información acerca de pnpm, aquí una guia rapida: https://youtu.be/MZ6JxWWCA5M?si=JLJivwlaz0gJ4s_F
->Documentación de pnpm: https://pnpm.io/es/motivation
+>Documentación de pnpm: https://pnpm.io/es/motivation.
+>El proceso de inicialización del proyecto con pnpm es el siguiente:
+>1. Una vez teniendo pnpm funcionando en tu sistema, en el directorio del proyecto elimina los archivos <b>package-lock.json</b> y el directorio <b>node_modules/</b> en caso de haber estado trabajando en una versión anterior con npm:
+>2. Posteriormente ejecuta el siguiente comando:
+>   ```
+>   pnpm install
+>   ```
+>   Este mismo instalara todas las dependiencias que esta utilizando el proyecto basado en el archivo original <i>package.json</i> de node.
+>3. Por último, se generará el archivo <b>pnpm-lock.yaml</b>, asegurate de no tenerlo agregado al archivo <i>.gitignore<i/>
+>4. Ejecuta el siguiente comando para limpiar el cache residual de npm en tu sistema:
+>    ```
+>    npm cache clean --force
+>    ```
 
 <h1> Para este proyecto se es necesario consultar que las tecnologias que utilicemos sean compatibles para lo que queremos hacer</h1>
 
