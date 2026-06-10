@@ -1,6 +1,20 @@
 # Server-web-Teseracto
 ![Badge en Desarrollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-gren)
 
+>[!NOTE]
+> Se migra el proyecto de npm a pnpm para la instación de dependencias de nodejs por lo que debe tener en cuenta instalar las dependecias necesarias utilizando pnpm con el siguiente comando SI su entorno de desarrollo será bajo Windows.
+>Habre una terminal PowerShell como administrador y ejecute el siguiente comando:
+>```
+> Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
+>```
+> En caso de que Windows rechace realizar cualquier instalación por detectarla como una ejecución maliciosa, indique a Windows Defender y agregue pnpm en las listas de excepciones con el siguinte comando:
+> ```
+> Add-MpPreference -ExclusionPath $(pnpm store path)
+> ```
+> Cualquier inconveniente comuniquelo con el administador.
+>Para más información acerca de pnpm, aquí una guia rapida: https://youtu.be/MZ6JxWWCA5M?si=JLJivwlaz0gJ4s_F
+>Documentación de pnpm: https://pnpm.io/es/motivation
+
 <h1> Para este proyecto se es necesario consultar que las tecnologias que utilicemos sean compatibles para lo que queremos hacer</h1>
 
 REVISAR LO SIGUIENTE:
@@ -40,7 +54,7 @@ https://youtu.be/3GymExBkKjE?si=zLJ2PQmF0lUdpPW_
 <h2>Paquetes y dependencias a instalar con el comando:</h2>
 
 ```
-npm install class-validator cors dotenv express morgan typeorm typeorm-naming-strategies typescript
+pnpm install class-validator cors dotenv express morgan typeorm typeorm-naming-strategies typescript
 ```
 
 Breve descripción y función de cada depedencia:
@@ -64,21 +78,21 @@ Breve descripción y función de cada depedencia:
 
 Para instalar el uso de postgresql con nodejs:
 ```
-npm install pg
+pnpm install pg
 ```
 
 **Dependencias de desarollo necesarias:**
 
 ```
-npm install -D @types/cors @types/express @types/morgan concurrently nodemon
+pnpm install -D @types/cors @types/express @types/morgan concurrently nodemon
 ```
 
 ```
-npm install --save pg   # Para PostgreSQL
+pnpm install --save pg   # Para PostgreSQL
 ```
 
 ```
-npm install --save-dev @types/pg 
+pnpm install --save-dev @types/pg 
 ```
 
 **"Estas dependencias no serán utilizadas en producción, no entran en el package.json"**
@@ -90,7 +104,7 @@ tsc -v
 <p1> En caso de que no funcione o aparezca "command not found" utlizar el comando:
 
 ```
-npm install -g typescript 
+pnpm install -g typescript 
 ```
 
 </p1>
@@ -117,7 +131,7 @@ tsc --init
 El archivo "server.ts" es el punto de entrada y de ejecución de todo el servidor, este por si mismo es el que se encuentra separado de las demás conexiones a base de datos, controladores o funcionalidades. Para este momento 19/10/2025 se ha actualizado "package.json" agregando un nuevo comando en 'Script', nos permite que al realizar una nueva actualización se "refresque" todo el servidor con los cambios sin apagar el servidor y volverlo a levantar, el comando para esto es: 
 
 ```
-npm run start:dev
+pnpm run start:dev
 ```
 
 Es importante investigar acerca de la **construcción de rutas para el servidor**, ya que podremos identificar en el archivo "server.ts" (por el momento) la creación de una ruta con el método **GET** que puse de ejemplo para su estudio y visualización.
@@ -129,8 +143,8 @@ Es importante investigar acerca de la **construcción de rutas para el servidor*
 *dependencias nuevas brindadas por Deepseek:*
 
 ```
-npm install reflect-metadata pg
-npm install -D @types/pg
+pnpm install reflect-metadata pg
+pnpm install -D @types/pg
 ```
 
 <h4> Descripción básica del uso de comandos, código y queries hacia la Base de Datos Teseracto. </h4>
