@@ -1,5 +1,5 @@
 node_modules
-vscode/*
 dist
 .env
-dist/server.js
+dist/
+node_modules/
