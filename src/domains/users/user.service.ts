@@ -2,6 +2,8 @@
 import { AppDataSource } from '../../core/database/connection';
 import { User } from './user.entity';
 import { Client } from '../clients/client.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { HashUtil } from '../../core/utils/hash.util';
 
 export class UserService {
     private userRepository = AppDataSource.getRepository(User);
@@ -187,19 +189,32 @@ export class UserService {
     /**
      * Actualizar información de usuario
      */
-    async updateUser(userId: number, updateData: Partial<User>): Promise<{ success: boolean; error?: string }> {
+    async updateUser(userId: number, updateData: UpdateUserDto): Promise<{ success: boolean; error?: string }> {
         try {
-            // Remover campos que no se pueden actualizar
-            const { id, created_at, password_hash, ...safeUpdateData } = updateData;
+            const user = await this.userRepository.findOne({
+                where: { id: userId }
+            });
 
-            const result = await this.userRepository.update(userId, safeUpdateData);
-
-            if (result.affected === 0) {
+            if (!user) {
                 return {
                     success: false,
                     error: 'Usuario no encontrado'
                 };
             }
+
+            // Si se envió una nueva contraseña, delegamos el hasheo a la utilidad (SRP)
+            if (updateData.password) {
+                // NOTA: Tu entidad usa 'password_hash', no 'password'
+                user.password_hash = await HashUtil.generateHash(updateData.password); 
+            }
+
+            // Actualizamos solo los campos que vienen en el DTO
+            if (updateData.username !== undefined) user.username = updateData.username;
+            if (updateData.role !== undefined) user.role = updateData.role;
+            if (updateData.client_id !== undefined) user.client_id = updateData.client_id;
+            if (updateData.is_active !== undefined) user.is_active = updateData.is_active;
+
+            await this.userRepository.save(user);
 
             return {
                 success: true

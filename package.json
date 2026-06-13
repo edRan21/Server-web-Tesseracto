@@ -7,7 +7,7 @@
   "scripts": {
     "start": "tsc && node dist/server.js",
     "start:dev": "tsc && concurrently \"tsc -w\" \"nodemon dist/server\"",
-    "dev": "nodemon index.js",
+    "dev": "pnpm run start:dev",
     "build": "tsc",
     "clean": "rm -rf dist"
   },

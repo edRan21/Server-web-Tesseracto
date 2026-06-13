@@ -323,4 +323,37 @@ export class ReportService {
 
         return stats;
     }
+
+    /**
+     * OBTENER REPORTES CON FILTRO DE ROLES Y FECHAS
+     */
+    async getReports(user: any, startDate?: string, endDate?: string): Promise<{success: boolean; reports?: any[]; error?: string}> {
+        try {
+            // Creamos un constructor de consultas (QueryBuilder)
+            let query = this.reportRepo.createQueryBuilder('report');
+
+            // Lógica de seguridad: Si NO es super_admin, solo ve los reportes de su empresa
+            if (user.role !== 'super_admin' && user.role !== 'admin') {
+                query.where('report.client_id = :clientId', { clientId: user.client_id });
+            }
+
+            // Aplicar filtros de fecha si el frontend los envió
+            if (startDate && endDate) {
+                query.andWhere('report.generated_at BETWEEN :start AND :end', { 
+                    start: new Date(startDate), 
+                    end: new Date(endDate) 
+                });
+            }
+
+            // Ordenar de más reciente a más antiguo
+            query.orderBy('report.generated_at', 'DESC');
+
+            const reports = await query.getMany();
+            return { success: true, reports };
+            
+        } catch (error) {
+            console.error('Error obteniendo reportes:', error);
+            return { success: false, error: 'Error en la base de datos al obtener reportes' };
+        }
+    }
 }

@@ -13,6 +13,7 @@ import { config } from './core/config/environment';
 import { ReportRouter } from './domains/reports/report.router';
 import { AuthRouter } from './domains/auth';
 import { ClientRouter } from './domains/clients/client.router';
+import { UtrRouter } from './domains/utrs/utr.router';
 
 class ServerBootstrap {
     public app: express.Application = express();
@@ -62,7 +63,8 @@ class ServerBootstrap {
             new UserRouter().router,
             new TelemetryRouter().router, // Añadir esta nueva ruta para telemetrías
             new ReportRouter().router,
-            new ClientRouter().router
+            new ClientRouter().router,
+            new UtrRouter().router
         ];
     }
 

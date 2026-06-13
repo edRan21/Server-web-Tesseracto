@@ -96,4 +96,26 @@ export class ReportController {
                     });
             }
     }
+
+    /**
+     * ENDPOINT PARA ENTREGAR REPORTES AL FRONTEND
+     */
+    async getReports(req: any, res: Response) {
+        try {
+            // El usuario viene del middleware del JWT
+            const user = req.user; 
+            const { startDate, endDate } = req.query;
+
+            const result = await this.reportService.getReports(user, startDate as string, endDate as string);
+
+            if (result.success) {
+                return res.status(200).json(result);
+            } else {
+                return res.status(400).json(result);
+            }
+        } catch (error) {
+            console.error('Error en getReports:', error);
+            return res.status(500).json({ success: false, error: 'Error interno del servidor' });
+        }
+    }
 }

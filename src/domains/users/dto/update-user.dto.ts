@@ -9,6 +9,11 @@ export class UpdateUserDto {
     })
     username?: string;
 
+    // --- NUEVO: Campo opcional para cambiar la contraseña ---
+    @IsOptional()
+    @IsString({ message: 'La contraseña debe ser una cadena de texto' })
+    password?: string;
+
     @IsOptional()
     @IsString({ message: 'El rol debe ser una cadena de texto' })
     @IsIn(['super_admin', 'admin', 'user'], { message: 'Rol inválido' })
